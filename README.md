@@ -7,7 +7,6 @@
 - virtualenv venv
 - source venv/bin/activate
 - pip install -r requirements.txt
-
 all set up!
 
 ## How to push to your branch
