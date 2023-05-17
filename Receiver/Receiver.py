@@ -9,7 +9,7 @@ import time
 RABBITMQ_HOST = 'localhost'
 RABBITMQ_QUEUE = 'answer'
 RABBITMQ_REQUEST_QUEUE = 'request'
-INTERVAL = 5
+INTERVAL = 60
 
 # Function to process the received data
 def process_data(data, data_object):
@@ -40,7 +40,7 @@ def send_request():
 
 # Function to delete the DataObject after one minute
 def delete_object(data_object):
-    # print(f"Deleting DataObject with timestamp {data_object.timestamp} \nIt included the following data: {data_object.data}")
+    print(f"Deleting DataObject with timestamp {data_object.timestamp} \nIt included the following data: {data_object.data}")
     del data_object
 
     # Create a new DataObject for the next minute
@@ -86,9 +86,9 @@ def initial_start():
 
 
 
-    notify_thread = threading.Thread(target=send_request)
-    notify_thread.daemon = True  # Set the thread as a daemon thread
-    notify_thread.start()
+    # notify_thread = threading.Thread(target=send_request)
+    # notify_thread.daemon = True  # Set the thread as a daemon thread
+    # notify_thread.start()
 
     # Start the RabbitMQ consumer
     start_rabbitmq_consumer()
