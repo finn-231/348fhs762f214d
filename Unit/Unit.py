@@ -282,13 +282,26 @@ def people_counter():
 		
 		
 		# detect changes here and send them to the IoT-Network
-		if(totalUp != pre_totalUp or totalDown != pre_totalDown):
+		if(totalDown != pre_totalDown):
 			# send message here
 			print("Person crossed the line")
+			ts = time.time()
+			timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 			# build json here
-			dictionary = {'unit_id':'1423341', 'room':'E412', 'enter':totalDown, 'exit':totalUp}
+			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'room':'E412', 'direction':'in'}
 			jsonString = json.dumps(dictionary, indent=4)
 			publish_reply(jsonString)
+
+		if(totalUp != pre_totalUp):
+			# send message here
+			print("Person crossed the line")
+			ts = time.time()
+			timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+			# build json here
+			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'room':'E412', 'direction':'out'}
+			jsonString = json.dumps(dictionary, indent=4)
+			publish_reply(jsonString)
+
 			
 		pre_totalUp = totalUp
 		pre_totalDown = totalDown
@@ -360,7 +373,7 @@ import pika
 def publish_reply(reply_message):
     connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
     channel = connection.channel()
-    
+    print(reply_message)
     # Declare the reply queue
     channel.queue_declare(queue=RABBITMQ_QUEUE)
     

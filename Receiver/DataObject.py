@@ -3,8 +3,8 @@ import time
 
 class DataObject:
     def __init__(self):
-        self.data = []
         self.timestamp = time.time()
+        self.data = []
 
-    def add_data(self, received_data):
-        self.data.append(received_data)
+    def add_data(self, data):
+        self.data.append(data)
