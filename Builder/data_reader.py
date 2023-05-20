@@ -2,7 +2,7 @@
 import pymysql 
 
 #function to establish connection to the database
-def read_data_from_database (): 
+def read_data_from_database (table_name): 
     connection = pymysql.connect(
         host = 'az-mysql-dbs-server.mysql.database.azure.com',
         user = 'sach',
@@ -14,8 +14,8 @@ def read_data_from_database ():
     cursor = connection.cursor()
 
     #customize the query 
-    query = "SELECT * FROM room"
-    #query = f"SELECT * FROM {table_name}" 
+    #query = "SELECT * FROM room"
+    query = f"SELECT * FROM {table_name}" 
     cursor.execute(query)
     rows = cursor.fetchall()
 
