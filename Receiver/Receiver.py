@@ -4,7 +4,7 @@ from DataWriter import DataWriter
 
 class Receiver:
 
-    import storecreds as cfg
+    from Receiver import storecreds as cfg
 
     RABBITMQ_HOST = cfg.rabbitmq["host"]
     RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
