@@ -1,8 +1,5 @@
-import threading
 import pika
 from DataWriter import DataWriter
-from Receiver import DataObject
-import time
 
 
 class Receiver:

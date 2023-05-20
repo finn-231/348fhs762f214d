@@ -288,7 +288,7 @@ def people_counter():
 			ts = time.time()
 			timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 			# build json here
-			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'room':'E412', 'direction':'in'}
+			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'direction':'in'}
 			jsonString = json.dumps(dictionary, indent=4)
 			publish_reply(jsonString)
 
@@ -298,7 +298,7 @@ def people_counter():
 			ts = time.time()
 			timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 			# build json here
-			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'room':'E412', 'direction':'out'}
+			dictionary = {'timestamp':f'{timestamp}', 'unit_id':'A1', 'direction':'out'}
 			jsonString = json.dumps(dictionary, indent=4)
 			publish_reply(jsonString)
 
