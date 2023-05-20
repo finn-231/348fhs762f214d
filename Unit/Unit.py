@@ -6,7 +6,6 @@ from mylib.mailer import Mailer
 from mylib import config, thread
 from itertools import zip_longest
 import time
-import schedule
 import csv
 import numpy as np
 import threading
@@ -365,8 +364,10 @@ def people_counter():
 	# close any open windows
 	cv2.destroyAllWindows()
 
-RABBITMQ_HOST = 'localhost'
-RABBITMQ_QUEUE = 'answer'
+import storecreds as cfg
+
+RABBITMQ_HOST = cfg.rabbitmq["host"]
+RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
 
 import pika
 

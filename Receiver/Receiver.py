@@ -4,8 +4,10 @@ from DataWriter import DataWriter
 
 class Receiver:
 
-    RABBITMQ_HOST = "localhost"
-    RABBITMQ_QUEUE = "answer"
+    import storecreds as cfg
+
+    RABBITMQ_HOST = cfg.rabbitmq["host"]
+    RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
 
     def __init__(self):
 
