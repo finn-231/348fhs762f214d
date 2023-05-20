@@ -4,17 +4,17 @@ import pymysql
 #function to establish connection to the database
 def read_data_from_database (): 
     connection = pymysql.connect(
-        host = 'localhost',
-        user = 'root',
-        password = 'your_password',
-        database = 'your_database'
+        host = 'az-mysql-dbs-server.mysql.database.azure.com',
+        user = 'sach',
+        password = 'security@adm1n',
+        database = 'room_data'
     )
     
     #created a cursor object to execute SQL queries on the database
     cursor = connection.cursor()
 
     #customize the query 
-    query = "SELECT * FROM rooms"
+    query = "SELECT * FROM room"
     #query = f"SELECT * FROM {table_name}" 
     cursor.execute(query)
     rows = cursor.fetchall()
@@ -32,5 +32,5 @@ def read_data_from_database ():
 from data_reader import read_data_from_database
 
 data = read_data_from_database()
-# data = read_data_from_database("rooms")
+# data = read_data_from_database("room")
 print(data)
