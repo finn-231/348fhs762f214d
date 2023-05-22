@@ -3,7 +3,6 @@ from Modules.DataWriter.DataWriter import DataWriter
 
 
 class Receiver:
-
     from Credentials import storecreds as cfg
 
     RABBITMQ_HOST = cfg.rabbitmq["host"]
@@ -14,16 +13,14 @@ class Receiver:
 
     # Function to process the received data
     def process_data(self, data):
-
-        # Print the current DataObject for demonstration purposes
-        self.write_object(data)
-
+        parseddata = self.write_object(data)
+        return parseddata
 
     # Function to delete the DataObject after one minute and write it to the database before
     def write_object(self, data):
-        
         writer = DataWriter()
-        writer.write_json_data(data)
+        parseddata = writer.write_json_data(data)
+        return parseddata
 
     # Function to create a new DataObject for the next minute
 
@@ -31,13 +28,16 @@ class Receiver:
     def rabbitmq_callback(self, ch, method, properties, body):
         # Convert the received data to a string
         data = body.decode("utf-8")
-        print(data)
         # Process the received data
-        self.process_data(data)
+        parseddata = self.process_data(data)
+        id = parseddata.get('unit_id')
+        print(f"#[Receiver]: Message received from Unit with ID {id}.\n")
 
     # Connect to RabbitMQ and start consuming messages
     def start_rabbitmq_consumer(self):
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host=self.RABBITMQ_HOST))
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters(host=self.RABBITMQ_HOST)
+        )
         channel = connection.channel()
 
         # Declare the queue
@@ -45,9 +45,13 @@ class Receiver:
 
         # Set up the callback for incoming messages
         channel.basic_consume(
-            queue=self.RABBITMQ_QUEUE, on_message_callback=self.rabbitmq_callback, auto_ack=True
+            queue=self.RABBITMQ_QUEUE,
+            on_message_callback=self.rabbitmq_callback,
+            auto_ack=True,
         )
 
         # Start consuming messages
-        print("Waiting for messages...")
+        print(
+            f"#[Receiver]: Started listening on queue {self.RABBITMQ_HOST}. Waiting for messages...\n"
+        )
         channel.start_consuming()

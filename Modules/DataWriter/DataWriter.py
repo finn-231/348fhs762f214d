@@ -47,3 +47,4 @@ class DataWriter:
         # self.create_table()
         self.write_data(parsed_data)
         self.disconnect()
+        return parsed_data
