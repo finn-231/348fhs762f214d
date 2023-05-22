@@ -14,6 +14,9 @@ mongo_database = {
     "mydb": "dev3",
     "mycol": "tickets"
 }
+httprequests = {
+    "bms": "127.0.0.1" # add more if neccessary
+}
 config = {
-    "ticket_time": 14 # put in the time when to check the tickets in a 24 hr format
+    "ticket_time": 20 # put in the time when to check the tickets in a 24 hr format
 }

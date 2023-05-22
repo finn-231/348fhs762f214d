@@ -11,6 +11,6 @@ calc = Calculator()
 thread_cleaning = threading.Thread(target=calc._fetch_data_loop_cleaning)
 thread_cleaning.start()
 
-# thread_light = threading.Thread(target=calc._fetch_data_loop_light)
-# thread_light.start()
+thread_light = threading.Thread(target=calc._fetch_data_loop_light)
+thread_light.start()
 
