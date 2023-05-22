@@ -1,12 +1,16 @@
 import pymongo
+from Credentials import storecreds as cfg
 
-myclient = pymongo.MongoClient("mongodb+srv://finnwaehlt:2103w9II@cluster0.ps1kys4.mongodb.net/")
-mydb = myclient["dev3"]
-mycol = mydb["test"]
+from pymongo import MongoClient
 
-mydict = { "name": "John", "address": "Highway 37" }
-x = mycol.find_one()
+class DataWriterMongo:
+    def __init__(self):
+        self.client = MongoClient(cfg.mongo_database["myclient"])
+        self.database = self.client[cfg.mongo_database["mydb"]]
 
-print(x)
+    def insert_ticket(self, data):
+        collection = self.database[cfg.mongo_database["mycol"]]
+        collection.insert_many(data)
 
-x = mycol.insert_one(mydict)
+    def close_connection(self):
+        self.client.close()

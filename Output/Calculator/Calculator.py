@@ -1,5 +1,7 @@
 import time
 from Modules.DataReader.DataReader import DataReader
+from Modules.DataWriterMongo.DataWriterMongo import DataWriterMongo
+
 
 class Calculator:
     def __init__(self):
@@ -10,27 +12,41 @@ class Calculator:
         self.is_running = False
 
     def _fetch_data_loop_cleaning(self):
-        dr = DataReader()
-        dr.connect()
+
+        import time
+        import datetime
+
         while self.is_running:
-            # Perform custom operations on the data
-            self.check_for_ticket(dr)
-            # Sleep for 5 seconds
-            time.sleep(5)
+        
+            current_time = datetime.datetime.now().time()
+            target_time = datetime.time(20, 0)  # 20:00
+
+            if current_time >= target_time:
+                self.check_for_ticket()
+                # Sleep for 24 hours before checking again
+                time.sleep(24 * 60 * 60)
+            else:
+                # Calculate the time remaining until 20:00
+                time_remaining = (
+                    datetime.datetime.combine(datetime.date.today(), target_time)
+                    - datetime.datetime.now()
+                )
+                # Sleep until 20:00
+                time.sleep(time_remaining.total_seconds())
+
 
     def _fetch_data_loop_light(self):
-        dr = DataReader()
-        dr.connect()
         while self.is_running:
             # Perform custom operations on the data
-            self.check_for_ticket(dr)
+            self.check_for_ticket()
             # Sleep for 5 seconds
             time.sleep(5)
 
-    def check_for_ticket(self, dr):
+    def check_for_ticket(self):
         # check if total people entering per room has passed 20
-
-        #get all rooms as an array
+        dr = DataReader()
+        dr.connect()
+        # get all rooms as an array
         room_array = dr.get_single_field(table_name="Room", field="ID")
         rooms = []
         for row in room_array:
@@ -47,9 +63,12 @@ class Calculator:
                 for count in row:
                     count = count
             # check if the value is over 20
-            if count > 1:
+            if count > 20:
                 print(f"limit surpassed ({count})")
+                # ticket needs to be sent
+                mongowriter = DataWriterMongo()
+                data = [{"timestamp": "testtime", "room": room}]
+                mongowriter.insert_ticket(data)
             else:
                 print(f"limit not surpassed ({count})")
             # possibly send ticket
-    

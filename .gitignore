@@ -154,7 +154,6 @@ dmypy.json
 cython_debug/
 
 # Keys
-storecreds.py
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
