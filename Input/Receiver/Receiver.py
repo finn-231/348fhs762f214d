@@ -1,18 +1,16 @@
 import pika
-from DataWriter import DataWriter
+from Modules.DataWriter.DataWriter import DataWriter
 
 
 class Receiver:
 
-    from Receiver import storecreds as cfg
+    from Input.Receiver import storecreds as cfg
 
     RABBITMQ_HOST = cfg.rabbitmq["host"]
     RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
 
     def __init__(self):
-
-        # Start the RabbitMQ consumer
-        self.start_rabbitmq_consumer()
+        pass
 
     # Function to process the received data
     def process_data(self, data):
@@ -24,7 +22,7 @@ class Receiver:
     # Function to delete the DataObject after one minute and write it to the database before
     def write_object(self, data):
         
-        writer = DataWriter.DataWriter()
+        writer = DataWriter()
         writer.write_json_data(data)
 
     # Function to create a new DataObject for the next minute
