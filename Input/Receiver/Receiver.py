@@ -52,6 +52,6 @@ class Receiver:
 
         # Start consuming messages
         print(
-            f"#[Receiver]: Started listening on queue {self.RABBITMQ_HOST}. Waiting for messages...\n"
+            f"#[Receiver]: Started listening on queue '{self.RABBITMQ_QUEUE}'. Waiting for messages...\n"
         )
         channel.start_consuming()
