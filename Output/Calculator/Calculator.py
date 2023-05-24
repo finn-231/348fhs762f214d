@@ -112,10 +112,24 @@ class Calculator:
                 # if yes, send request to turn on the light
                 if total_count > 0 and total_count > prev_occ.get(room) and prev_occ.get(room) <= 0:
                     print(f"#[Calculator]: Turning on light in room {room}...\n")
-                    http_requester = HTTPrequester(receiver="bms")  # Replace with the desired IP address
+                    
+                    # get all the light_ids for this room
+                    query = f"SELECT ID FROM Light WHERE room_id = '{room}'"
+                    light_result = dr.custom_query(query)
+                    light_ids = []
+                    for row in light_result:
+                        for id in row:
+                            light_ids.append(id)
+
+                    payload = {
+                        "switch":1,
+                        "lights":light_ids
+                    }
+
+                    http_requester = HTTPrequester(receiver="bms", port="bms_port")  # Replace with the desired IP address
                     # Make the HTTP request
                     try:
-                        http_requester.make_request('lights', {'switch': 1})
+                        http_requester.make_request('lights', payload)
                     except ConnectionRefusedError:
                         print(f"#[Calculator]: Can't turn on light in room {room}. Error: Connection Refused.\n")
                     except Exception as e:
@@ -123,10 +137,25 @@ class Calculator:
                 # check if the count is smaller than zero and smaller than the last one
                 elif total_count <= 0 and total_count < prev_occ.get(room):
                     print(f"#[Calculator]: Turning off light in room {room}...\n")
-                    http_requester = HTTPrequester(receiver="bms")  # Replace with the desired IP address
+
+                    # get all the light_ids for this room
+                    query = f"SELECT ID FROM Light WHERE room_id = '{room}'"
+                    light_result = dr.custom_query(query)
+                    light_ids = []
+                    for row in light_result:
+                        for id in row:
+                            light_ids.append(id)
+
+                    
+                    payload = {
+                        "switch":0,
+                        "lights":light_ids
+                    }
+
+                    http_requester = HTTPrequester(receiver="bms", port="bms_port")  # Replace with the desired IP address
                     # Make the HTTP request
                     try:
-                        http_requester.make_request('lights', {'switch': 0})
+                        http_requester.make_request('lights', payload)
                     except ConnectionRefusedError:
                         print(f"#[Calculator]: Can't turn off light in room {room}. Error: Connection Refused.\n")
                     except Exception as e:
