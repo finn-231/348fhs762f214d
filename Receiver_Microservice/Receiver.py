@@ -1,5 +1,6 @@
 import pika
 from Modules.DataWriter.DataWriter import DataWriter
+from Modules.DataReader.DataReader import DataReader
 
 
 class Receiver:
@@ -11,6 +12,18 @@ class Receiver:
     def __init__(self):
         pass
 
+    def getdatawithquery(self, query):
+        dr = DataReader()
+        dr.connect()
+        result = dr.custom_query(query)
+        return result
+    
+    def getdataonefield(self, table, field):
+        dr = DataReader()
+        dr.connect()
+        result = dr.get_single_field(table_name=table, field=field)
+        return result
+    
     # Function to process the received data
     def process_data(self, data):
         parseddata = self.write_object(data)
@@ -52,6 +65,6 @@ class Receiver:
 
         # Start consuming messages
         print(
-            f"#[Receiver]: Started listening on queue {self.RABBITMQ_HOST}. Waiting for messages...\n"
+            f"#[Receiver]: Started listening on queue {self.RABBITMQ_QUEUE}. Waiting for messages...\n"
         )
         channel.start_consuming()
