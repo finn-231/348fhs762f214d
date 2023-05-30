@@ -11,7 +11,11 @@ class MongoDBReader:
         try:
             collection = self.database[cfg.mongo_database["mycol"]]
             data = collection.find()
-            return data
+            print(data)
+            data_list = []
+            for document in data:
+                data_list.append(dict(document))
+            return data_list
         except Exception as e:
             data=["Error"]
             return data

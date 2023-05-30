@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify, request
 from Credentials import storecreds as cfg
 from Cleaning_Microservice.Cleaning import Cleaning
@@ -15,10 +16,18 @@ class CleaningListener:
             print("#[Cleaning_API]: Microservices started")
             return 'OK'
         
-        @self.app.route('/gettickets', methods=['POST'])
+        @self.app.route('/gettickets', methods=['GET'])
         def get_data():
             data = self.ms.get_tickets()
-            return jsonify(data)
+            data_list = []
+            for document in data:
+                # Convert ObjectId to string
+                document['_id'] = str(document['_id'])
+                data_list.append(document)
+
+            # Convert data_list to JSON
+            json_data = json.dumps(data_list)
+            return json_data
 
 
     def start_listening(self):
