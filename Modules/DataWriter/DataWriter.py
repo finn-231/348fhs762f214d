@@ -7,7 +7,7 @@ class DataWriter:
 
     def connect(self):
         # Replace the connection parameters with your specific MySQL database details
-        from Modules.DataWriter import storecreds as cfg
+        from Credentials import storecreds as cfg
 
         db_host = cfg.sql_database["host"]
         db_user = cfg.sql_database["user"]
@@ -47,3 +47,4 @@ class DataWriter:
         # self.create_table()
         self.write_data(parsed_data)
         self.disconnect()
+        return parsed_data

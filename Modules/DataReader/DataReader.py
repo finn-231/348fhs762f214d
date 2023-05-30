@@ -6,7 +6,7 @@ class DataReader:
 
     def connect(self):
 
-        from Modules.DataWriter import storecreds as cfg
+        from Credentials import storecreds as cfg
 
         db_host = cfg.sql_database["host"]
         db_user = cfg.sql_database["user"]

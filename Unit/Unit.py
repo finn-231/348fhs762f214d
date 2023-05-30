@@ -364,7 +364,7 @@ def people_counter():
 	# close any open windows
 	cv2.destroyAllWindows()
 
-import storecreds as cfg
+from Credentials import storecreds as cfg
 
 RABBITMQ_HOST = cfg.rabbitmq["host"]
 RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
