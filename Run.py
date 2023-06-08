@@ -1,6 +1,6 @@
-from Receiver_Microservice.API.app import ReceiverListener
-from Light_Microservice.API.app import LightListener
-from Cleaning_Microservice.API.app import CleaningListener
+from Occupancy_Aggregate.API.app import ReceiverListener
+from Lights_Aggregate.API.app import LightListener
+from Cleaning_Aggregate.API.app import CleaningListener
 from BMS.app import BMSListener
 from Gateway.app import GatewayListener
 import threading
@@ -9,15 +9,15 @@ from Credentials import storecreds as cfg
 import time
 
 def start_apis():
-    # Receiver
+    # Occupancy Aggregate
     rl = ReceiverListener()
     thread_receiver = threading.Thread(target=rl.start_listening)
     thread_receiver.start()
-    # Light Microservice
+    # Lights Aggregate
     ll = LightListener()
     thread_light = threading.Thread(target=ll.start_listening)
     thread_light.start()
-    # Cleaning Microservice
+    # Cleaning Aggregate
     cl = CleaningListener()
     thread_cleaning = threading.Thread(target=cl.start_listening)
     thread_cleaning.start()
@@ -49,9 +49,9 @@ time.sleep(5)
 thread_receiver = threading.Thread(target=start_receiver)
 thread_receiver.start()
 
-thread_light = threading.Thread(target=start_light)
-thread_light.start()
+# thread_light = threading.Thread(target=start_light)
+# thread_light.start()
 
-thread_cleaning = threading.Thread(target=start_cleaning)
-thread_cleaning.start()
+# thread_cleaning = threading.Thread(target=start_cleaning)
+# thread_cleaning.start()
 
