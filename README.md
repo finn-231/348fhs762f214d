@@ -1,4 +1,4 @@
-# 348fhs762f214d
+# Iot Solution
 
 ## How to install
 - git clone https://github.com/finn-231/348fhs762f214d.git
@@ -9,8 +9,8 @@
 - pip install -r requirements.txt
 all set up!
 
-## How to push to your branch
-- got to source control inside VSCode
-- enter commit message
-- press on the 3 dots above and select Checkout to...
-- choose your branch and push
+## How to Run
+- go to Credentials/storecreds.py and configure IPs and Ports for the APIs
+- python Run.py
+- the microservices will be automaticall started, the APIs are listening
+- the system will run on its own and listen for new measurements from the Raspberry Pis

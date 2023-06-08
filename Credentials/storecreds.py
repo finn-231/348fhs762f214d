@@ -1,34 +1,35 @@
 #!/usr/bin/env python
 sql_database = {
-    "host": "127.0.0.1",
-    "user": "root",
-    "passwd": "2103w9II",
-    "db": "northwind",
+    "host": "",
+    "user": "",
+    "passwd": "",
+    "db": "",
 }
 rabbitmq = {
     "host": "localhost",
-    "queue": "answer"
+    "queue": "answer",
+    "microservice_queue": "ms_queue"
 }
 mongo_database = {
-    "myclient": "mongodb+srv://finn_waehlt:dBXyAdWQf4t44ShXW1@cluster0.z2cr85t.mongodb.net/test",
-    "mydb": "dev3",
-    "mycol": "tickets"
+    "myclient": "",
+    "mydb": "",
+    "mycol": ""
 }
 httprequests = {
-    "bms": "127.0.0.1", # add more if neccessary
+    "bms": "", # add more if neccessary
     "bms_port": 5000,
 
-    "gateway": "127.0.0.1",
+    "gateway": "",
     "gateway_port": 5001,
 
     # Microservice APIs
-    "cleaning_ms": "127.0.0.1",
+    "cleaning_ms": "",
     "cleaning_port": 5002,
 
-    "light_ms": "127.0.0.1",
+    "light_ms": "",
     "light_port": 5003,
 
-    "receiver_ms": "127.0.0.1",
+    "receiver_ms": "localhost",
     "receiver_port": 5004
 
 }
