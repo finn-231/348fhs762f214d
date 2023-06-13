@@ -4,15 +4,12 @@ from Modules.DataReader.DataReader import DataReader
 import json
 
 
-class Receiver:
+class OccupancyService:
     from Credentials import storecreds as cfg
 
     RABBITMQ_HOST = cfg.rabbitmq["host"]
     RABBITMQ_QUEUE = cfg.rabbitmq["queue"]
     RABBITMQ_MS_QUEUE = cfg.rabbitmq["microservice_queue"]
-
-    def __init__(self):
-        pass
 
     def getdatawithquery(self, query):
         dr = DataReader()
@@ -27,10 +24,12 @@ class Receiver:
         return result
     
     # Function to process the received data
-    def process_data(self, data):
+    def store_data(self, data):
         # write object to the database
         parseddata = self.write_object(data)
-        
+        return parseddata
+
+    def publish_data(data):
         # also send content over rabbitmq
         connection = pika.BlockingConnection(
         pika.ConnectionParameters(host='localhost'))
@@ -39,15 +38,12 @@ class Receiver:
         json_string = json.dumps(data)
         channel.basic_publish(exchange='', routing_key='ms_exchange', body=json_string)
         connection.close()
-        return parseddata
+        pass
 
-    # Function to delete the DataObject after one minute and write it to the database before
     def write_object(self, data):
         writer = DataWriter()
         parseddata = writer.write_json_data(data)
         return parseddata
-
-    # Function to create a new DataObject for the next minute
 
     # RabbitMQ message handler
     def rabbitmq_callback(self, ch, method, properties, body):
@@ -55,6 +51,7 @@ class Receiver:
         data = body.decode("utf-8")
         # Process the received data
         parseddata = self.process_data(data)
+        self.publish_data()
         id = parseddata.get('unit_id')
         print(f"#[Receiver]: Message received from Unit with ID {id}.\n")
 

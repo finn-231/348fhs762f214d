@@ -1,6 +1,6 @@
 from flask import Flask, request
 from Credentials import storecreds as cfg
-from Light_Microservice.Lights import Lights
+from Lights_Aggregate.Lights import Lights
 class LightListener:
     def __init__(self):
         self.ip_address = cfg.httprequests["light_ms"]
@@ -19,7 +19,6 @@ class LightListener:
             # get the data here
             data = "This feature is coming soon..."
             return data
-
 
     def start_listening(self):
         print(f"#[Light_MS]: Listening on {self.ip_address}/{self.port}...\n")

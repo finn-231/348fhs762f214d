@@ -5,15 +5,9 @@ from Credentials import storecreds as cfg
 import requests
 
 
-class Cleaning:
-    def __init__(self):
-        self.database = None
-        self.is_running = True
+class TicketCreationService:
 
-    def stop(self):
-        self.is_running = False
-
-    def _fetch_data_loop_cleaning(self):
+    def _fetch_data_trigger_cleaning(self):
         import time
         import datetime
 
@@ -27,7 +21,7 @@ class Cleaning:
             for room in row:
                 rooms.append(room)
 
-        while self.is_running:
+        while True:
             current_time = datetime.datetime.now().time()
             target_time = datetime.time(cfg.config["ticket_time"], 0)  # 20:00
 
@@ -46,7 +40,6 @@ class Cleaning:
                 # Sleep until 20:00
                 time.sleep(time_remaining.total_seconds())
             
-
     def check_for_ticket(self, rooms):
         # check if total people entering per room has passed 20
         # for each room

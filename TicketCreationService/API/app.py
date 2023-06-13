@@ -1,7 +1,7 @@
 import json
 from flask import Flask, jsonify, request
 from Credentials import storecreds as cfg
-from Cleaning_Microservice.Cleaning import Cleaning
+from Cleaning_Aggregate.Cleaning import Cleaning
 
 class CleaningListener:
     def __init__(self):
