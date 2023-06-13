@@ -4,15 +4,9 @@ import requests
 import json
 
 
-class Lights:
-    def __init__(self):
-        self.database = None
-        self.is_running = True
+class LightRegulationService:
 
-    def stop(self):
-        self.is_running = False
-
-    def _fetch_data_loop_light(self):
+    def _fetch_data_trigger_lights(self):
         response = requests.post(
             f"http://{cfg.httprequests['receiver_ms']}:{cfg.httprequests['receiver_port']}/getdataonefield",
             json=["Room", "ID"]
@@ -24,14 +18,10 @@ class Lights:
                 rooms.append(room)
 
         prev_occ = {}
-        while self.is_running:
-
-
-            def callback(ch, method, properties, body):
+        while True:
+            self.check_for_light(rooms, prev_occ=prev_occ)
+            time.sleep()
             
-                self.check_for_light(rooms, body, prev_occ=prev_occ,)
-            
-
     def check_for_light(self, rooms, prev_occ):
         # lets create key_value pairs to make a object we can reference to
         for room in rooms:
